@@ -21,6 +21,9 @@ pebbles in top_ghost.dat and bot_ghost.dat will be used to construct ghost pebbl
 To use top_ghost.dat and bot_ghost.dat is optional but prefered.
 because use top_ghost.dat and bot_ghost.dat could reduce the max aspect ratio of elements.
 
+NOTICE: the final mesh will be scaled to ensure pebble diameter is 1. 
+But user should provide dimensional values in pebbles.dat, top_ghost.dat and bot_ghost.dat. 
+
 3. run voro_to_hex_full_parallel.py to generate hfiles
 
 if_top_bot_ghost_pebble_from_files is True if top_ghost.dat and bot_ghost.dat are provided.
