@@ -1,5 +1,5 @@
 5          # cylinder radius        
-0 10       # top and bot of cylinder in z 
+0 10       # top and bot of cylinder in z, however top and bot planes defined here should be offset (1/4 diameter) to avoid contact with pebbles.
 1.0        # pebble diameter
 100        # number of pebbles
 x1 y1 z1
