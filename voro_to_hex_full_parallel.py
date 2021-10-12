@@ -34,8 +34,8 @@ ghost_pebble_tol_top_bot = 2.0
 
 r_chamfer = 0.1 # chamfer radius relative to pebble radius
 
-nm = 6          # number of vertice merge iteration
-tol = [0.05,0.08,0.12,0.12,0.08,0.05] # tolerance of each vertice merge iteration
+nm = 5          # number of vertice merge iteration
+tol = [0.05,0.08,0.1,0.08,0.05] # tolerance of each vertice merge iteration
 #=================================================================================
 
 geo = []
@@ -641,8 +641,8 @@ for iface in range(0,vor_face.nf):
 			start.append(len(valid_faces)-1)
 			iquad2 = iquad2 + nqrange
 
-print 'str(len(start)); '+ str(len(start))
-print start
+#print 'str(len(start)); '+ str(len(start))
+#print start
 
 end = []
 
