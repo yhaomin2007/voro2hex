@@ -33,6 +33,7 @@ ghost_pebble_tol_side = 1.5
 ghost_pebble_tol_top_bot = 2.0
 
 r_chamfer = 0.1 # chamfer radius relative to pebble radius
+chamfer_detect_distance = 1.025 #  when pebble-pebble center distance less than chamfer_detect_distance, consider there is a chamfer
 
 nm = 5          # number of vertice merge iteration
 tol = [0.05,0.08,0.1,0.08,0.05] # tolerance of each vertice merge iteration
@@ -336,7 +337,7 @@ for iface in range(0,vor_face.nf):
 	p1xyz = random_pebbles.pebble_xyz(p1)
 	p2 = vor_face.f_to_p[iface][1]
 	p2xyz = random_pebbles.pebble_xyz(p2)
-	vor_face.detect_chamfer(iface,p1xyz,p2xyz,pebble_diameter,1.025) # if pebble-pebble distance is less than 1.02*diameter, then consider them touching
+	vor_face.detect_chamfer(iface,p1xyz,p2xyz,pebble_diameter,chamfer_detect_distance) # if pebble-pebble distance is less than 1.02*diameter, then consider them touching
 
 vtkFileName = 'polygon_with_chamfer.vtk'
 print ' dumping '+ vtkFileName
