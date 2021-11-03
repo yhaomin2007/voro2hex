@@ -442,10 +442,10 @@ def polygons_to_hexs(vor_face,vor_vert,random_pebbles,pebble_diameter,geo,start,
 	if ip == 0:	print 'generate unstream, downstream, and cylinder sidewall hexs'
 	
 	#target_dn_plane_z = 0.3*scaling
-	#target_up_plaen_z = 1.0*scaling
+	#target_up_plane_z = 1.0*scaling
 	
 	target_dn_plane_z = cyl_bot - 2.0*pebble_diameter
-	target_up_plaen_z = cyl_top + 4.0*pebble_diameter
+	target_up_plane_z = cyl_top + 4.0*pebble_diameter
 	
 	nlayers_dn = 20
 	nlayers_up = 30
@@ -471,14 +471,14 @@ def polygons_to_hexs(vor_face,vor_vert,random_pebbles,pebble_diameter,geo,start,
 				v8 = []
 				for iv in range(0,4):
 					zbot = bot_quads.xyz[iquad][iv][2]
-					delta_up = (target_up_plaen_z-zbot)/nlayers_up
+					delta_up = (target_up_plane_z-zbot)/nlayers_up
 					
 					offset = [0,0,delta_up*ilayer]
 					vert_new =offset_vert(bot_quads.xyz[iquad][iv],offset)
 					v8.append(vert_new)
 				for iv in range(0,4):
 					zbot = bot_quads.xyz[iquad][iv][2]
-					delta_up = (target_up_plaen_z-zbot)/nlayers_up
+					delta_up = (target_up_plane_z-zbot)/nlayers_up
 					
 					offset = [0,0,delta_up*(ilayer+1)]
 					vert_new =offset_vert(bot_quads.xyz[iquad][iv],offset)
@@ -1104,10 +1104,10 @@ def polygons_to_hexs2(vor_face,vor_vert,random_pebbles,pebble_diameter,geo,start
 	if ip == 0:	print 'generate unstream, downstream, and cylinder sidewall hexs'
 	
 	#target_dn_plane_z = 0.3*scaling
-	#target_up_plaen_z = 1.0*scaling
+	#target_up_plane_z = 1.0*scaling
 	
 	target_dn_plane_z = cyl_bot - 2.0*pebble_diameter
-	target_up_plaen_z = cyl_top + 4.0*pebble_diameter
+	target_up_plane_z = cyl_top + 4.0*pebble_diameter
 	
 	nlayers_dn = 20
 	nlayers_up = 30
@@ -1133,14 +1133,14 @@ def polygons_to_hexs2(vor_face,vor_vert,random_pebbles,pebble_diameter,geo,start
 				v8 = []
 				for iv in range(0,4):
 					zbot = bot_quads.xyz[iquad][iv][2]
-					delta_up = (target_up_plaen_z-zbot)/nlayers_up
+					delta_up = (target_up_plane_z-zbot)/nlayers_up
 					
 					offset = [0,0,delta_up*ilayer]
 					vert_new =offset_vert(bot_quads.xyz[iquad][iv],offset)
 					v8.append(vert_new)
 				for iv in range(0,4):
 					zbot = bot_quads.xyz[iquad][iv][2]
-					delta_up = (target_up_plaen_z-zbot)/nlayers_up
+					delta_up = (target_up_plane_z-zbot)/nlayers_up
 					
 					offset = [0,0,delta_up*(ilayer+1)]
 					vert_new =offset_vert(bot_quads.xyz[iquad][iv],offset)
@@ -1254,11 +1254,21 @@ def polygons_to_hexs2(vor_face,vor_vert,random_pebbles,pebble_diameter,geo,start
 				s6[iface] = top_side_quads.edge_tag[iquad][iface]
 	
 			v8 = []
+
 			for iv in range(0,4):
+							
+				zbot = top_side_quads.xyz[iquad][iv][2]
+				delta_up = (target_up_plane_z-zbot)/nlayers_up
+				
 				offset = [0,0,delta_up*ilayer]
 				vert_new =offset_vert(top_side_quads.xyz[iquad][iv],offset)
 				v8.append(vert_new)
+				
 			for iv in range(0,4):
+				
+				zbot = top_side_quads.xyz[iquad][iv][2]
+				delta_up = (target_up_plane_z-zbot)/nlayers_up
+				
 				offset = [0,0,delta_up*(ilayer+1)]
 				vert_new =offset_vert(top_side_quads.xyz[iquad][iv],offset)
 				v8.append(vert_new)
@@ -1282,10 +1292,18 @@ def polygons_to_hexs2(vor_face,vor_vert,random_pebbles,pebble_diameter,geo,start
 	
 			v8 = []
 			for iv in range(0,4):
+				
+				zbot = bot_side_quads.xyz[iquad][iv][2]
+				delta_dn = (zbot-target_dn_plane_z)/nlayers_dn
+				
 				offset = [0,0,-delta_dn*ilayer]
 				vert_new =offset_vert(bot_side_quads.xyz[iquad][iv],offset)
 				v8.append(vert_new)
 			for iv in range(0,4):
+				
+				zbot = bot_side_quads.xyz[iquad][iv][2]
+				delta_dn = (zbot-target_dn_plane_z)/nlayers_dn
+				
 				offset = [0,0,-delta_dn*(ilayer+1)]
 				vert_new =offset_vert(bot_side_quads.xyz[iquad][iv],offset)
 				v8.append(vert_new)
