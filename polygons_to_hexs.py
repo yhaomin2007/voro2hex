@@ -8,7 +8,7 @@ from polygon_divide import *
 from write_rea import *
 from dump_vtk import *
 from fix_elements import *
-
+from hex_jacobian_subroutines import *
 
 def polygons_to_hexs(vor_face,vor_vert,random_pebbles,pebble_diameter,geo,start,end,valid_faces,ip):
 	
@@ -1366,6 +1366,12 @@ def write_hfiles(file,hex20):
 		v8 = hex20.v8[ihex]
 		e12 =  hex20.e12[ihex]
 		s6 = hex20.s6[ihex]
+		
+		if_auto_correction = True
+		if (if_auto_correction):
+			if_linearize = detect_jacobian_for_hex20(v8,e12)
+			if (if_linearize):
+				e12 = v8_to_e12(v8)
 		
 		ns6 = []
 		for iface in range(0,6):
