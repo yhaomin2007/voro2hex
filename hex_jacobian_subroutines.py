@@ -14,12 +14,14 @@ def detect_jacobian_for_hex20(v8,e12):
 
 	if (if_vanishing):
 		print 'vanishing jacobian for this element, this elelemt will be linearized'
+		print 'near '+str(vc[0])+' '+str(vc[1])+' '+str(vc[2])
 
 	if (if_low_quality):
 		print 'low scaled-jacobian for this element, this elelemt will be linearized'
+		print 'near '+str(vc[0])+' '+str(vc[1])+' '+str(vc[2])
 
 	if_linearize = False
-	if if_vanishing or if_vanishing:
+	if if_vanishing or if_low_quality:
 		if_linearize = True
 		
 	return if_linearize
