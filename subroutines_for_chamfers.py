@@ -1,5 +1,89 @@
 from splitting_subroutines import *
 
+def shrink_chamfer_polygon_to_center_polygon(iface,face,vert,vert_reduction):
+	#
+	# improved method for chamfer polygon in order to improve dt
+	#
+	quads = []
+	nverts = len(face.f_to_v[iface])
+	fc = face.f_center[iface]
+	p1 = face.f_to_p[iface][0]
+	p2 = face.f_to_p[iface][1]
+	plist = [p1,p2]
+	vlist = face.f_to_v[iface]
+	face.ifcollapse[iface] = True
+	
+	if True: #shirnk to octogon
+		# 1st, create inner polygon
+		vlist_new = []
+		for iv in range(0,nverts):
+			v1 = face.f_to_v[iface][iv]
+			v1xyz = vert.xyz[v1]
+			v2xyz = line_split(v1xyz,fc,0.25) # inner polygon vertice
+			vert.new_vertice(v2xyz[0],v2xyz[1],v2xyz[2])
+			vlist_new.append(vert.nv-1)
+
+		face.new_face(vlist_new,plist)
+		iface_new = face.nf-1
+
+		face.find_edge_info(iface_new)
+		face.calculate_edge_length(iface_new,vert)
+
+		#2nd, collapse small edge of inner polygon
+		# collapse the small vert_reduction edges
+		lengths = face.lengths[iface_new]
+		lengths.sort()
+		threshold_length = lengths[vert_reduction]
+		# now collapse edges that < threshold_length
+		collapsed = []
+		face.ifchamfer[iface_new] = True
+		
+		# generate side polygon
+		for iv in range(0,nverts):
+			v1 =  vlist[iv]
+			v2 =  vlist[(iv+1)%nverts]
+			v3 =  vlist_new[(iv+1)%nverts]
+			v4 =  vlist_new[iv]
+			vlist_new2 = [v1,v2,v3,v4]
+			face.new_face(vlist_new2,plist)
+	
+		# merge center polygon into octpgon 
+		for iv in range(0,nverts):
+			length = face.lengths[iface_new][iv]
+			collapsed.append(False)
+			if length < threshold_length:
+				if iv > 0 and  collapsed[iv-1]== True :
+					# jump this one, and increase threshold_length
+					# this to avoid collapse adjacent point.
+					vert_reduction = vert_reduction + 1
+					threshold_length = lengths[vert_reduction]
+				else:
+				
+					collapsed[iv] = True
+				
+					iv1 = iv
+					iv2 = (iv +1)%nverts
+				
+					iv1 = face.f_to_v[iface_new][iv1]
+					iv2 = face.f_to_v[iface_new][iv2]
+				
+					v1xyz = vert.xyz[iv1]
+					v2xyz = vert.xyz[iv2]
+				
+					midxyz = line_split(v1xyz,v2xyz,0.5)
+				
+					vert.xyz[iv1] = midxyz
+					vert.xyz[iv2] = midxyz
+				
+					vert.mgd_v[iv1] = vert.mgd_v[iv1] + vert.mgd_v[iv2]
+					vert.mgd_v[iv1]= remove_duplicates(vert.mgd_v[iv1])
+					vert.mgd_v[iv2] = vert.mgd_v[iv1]
+				
+					for iv3 in vert.mgd_v[iv1]:
+						vert.xyz[iv3] = midxyz
+						
+	return
+
 def shrink_towards_center(iface,face,vert,vert_reduction):
 
 	quads = []

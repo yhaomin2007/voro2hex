@@ -48,6 +48,11 @@ delta_sw = 0.01 # sidewall boundary layer thickness
 
 nm = 5          # number of vertice merge iteration
 tol = [0.05,0.08,0.1,0.08,0.05] # tolerance of each vertice merge iteration
+
+if_improve_chamfer_polygon_divide = False # 
+# using an improved chamfer polygon divide method to 
+# avoid very small edge on the chamfer to increase dt. 
+# but this will increase element number. 
 #=================================================================================
 
 geo = []
@@ -556,6 +561,31 @@ for iface in range(0,vor_face.nf):
 vtkFileName = 'polygon_9.vtk'
 print ' dumping '+ vtkFileName
 dump_poly_vtk(vor_vert,vor_face,vtkFileName)
+
+#================================================================================
+#================================================================================
+# 
+# improvd method for chamfer polygon divide
+if if_improve_chamfer_polygon_divide:
+	for iface in range(0,vor_face.nf):
+		nedges = len(vor_face.f_to_v[iface])
+		if vor_face.ifchamfer[iface] and nedges > 8:
+			shrink_chamfer_polygon_to_center_polygon(iface,vor_face,vor_vert,nedges-8) # shrink to octogon
+	
+	for iface in range(0,vor_face.nf):
+		vor_face.find_edge_info(iface)
+		vor_face.calculate_edge_length(iface,vor_vert)
+		vor_face.clean_up_zero_length_edge(iface,vor_vert)
+
+	for iface in range(0,vor_face.nf):
+		vor_face.find_edge_info(iface)
+		vor_face.calculate_edge_length(iface,vor_vert)
+		vor_face.add_f_center(iface,vor_vert,random_pebbles,pebble_diameter)
+		vor_face.calculate_vertice_angles(iface,vor_vert)
+	
+	vtkFileName = 'polygon_10.vtk'
+	print ' dumping '+ vtkFileName
+	dump_poly_vtk(vor_vert,vor_face,vtkFileName)
 
 #================================================================================
 #=================================================================================
