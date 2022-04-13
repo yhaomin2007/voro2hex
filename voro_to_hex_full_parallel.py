@@ -35,6 +35,17 @@ ghost_pebble_tol_top_bot = 2.0
 r_chamfer = 0.1 # chamfer radius relative to pebble radius
 chamfer_detect_distance = 1.025 #  when pebble-pebble center distance less than chamfer_detect_distance, consider there is a chamfer
 
+n_radius = 4 # number of layers of elements from polygon to sphere
+bl_thickness = 0.015 # boundary layer thickness of element on sphere
+
+domain_dn_plane_offset = 2.0 # domain lower plane offset from cyl_bot in the unit of pebble diameter
+domain_up_plane_offset = 4.0 # domain upper plane offset from cyl_bot in the unit of pebble diameter
+
+nlayers_dn = 20  # number of lower cavity domain extrusion layers 
+nlayers_up = 30  # number of upper cavity domain extrusion layers	
+
+delta_sw = 0.01 # sidewall boundary layer thickness
+
 nm = 5          # number of vertice merge iteration
 tol = [0.05,0.08,0.1,0.08,0.05] # tolerance of each vertice merge iteration
 #=================================================================================
@@ -65,6 +76,13 @@ geo.append(cyl_bot)
 geo.append(cyl_top)
 geo.append(r_chamfer)
 geo.append(scaling)
+geo.append(n_radius)
+geo.append(bl_thickness)
+geo.append(domain_dn_plane_offset)
+geo.append(domain_up_plane_offset)
+geo.append(nlayers_dn)
+geo.append(nlayers_up)
+geo.append(delta_sw)
 
 number_of_pebbles = int(pebble_file.readline().split()[0])
 
