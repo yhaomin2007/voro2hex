@@ -293,7 +293,7 @@ def polygons_to_hexs(vor_face,vor_vert,random_pebbles,pebble_diameter,geo,start,
 				# only construct hex for non-ghost pebble
 				pxyz = random_pebbles.xyz[pebble_id]
 
-				prj_center = random_pebbles.prj_center[pebble_id]
+				# prj_center = random_pebbles.prj_center[pebble_id]
 				tol = 0.01 # 0.0075
 				#if (ptag == 'INT'):
 					# for intersection pebbles, project to pebble surface, but with a different projecting center
@@ -952,7 +952,7 @@ def polygons_to_hexs2(vor_face,vor_vert,random_pebbles,pebble_diameter,geo,start
 				# only construct hex for non-ghost pebble
 				pxyz = random_pebbles.xyz[pebble_id]
 				
-				prj_center = random_pebbles.prj_center[pebble_id]
+				# prj_center = random_pebbles.prj_center[pebble_id]
 				tol = 0.01 # 0.0075
 				#if (ptag == 'INT'):
 					# for intersection pebbles, project to pebble surface, but with a different projecting center
